@@ -1,7 +1,7 @@
 "use client"; 
 import { useAppDispatch, useAppSelector } from '@/app/redux';
 import { setIsSidebarCollapsed } from '@/state';
-import { Briefcase, ChevronDown, ChevronUp, Home, LockIcon, LucideIcon, Search, Settings, User, Users, X } from 'lucide-react';
+import { AlertCircle, AlertOctagon, AlertTriangle, Briefcase, ChevronDown, ChevronUp, Home, Layers3, LockIcon, LucideIcon, Search, Settings, ShieldAlert, User, Users, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -41,6 +41,34 @@ const SidebarNavLinks = [
     }, 
 
     
+]
+
+const PriorityLinks = [
+   { 
+        icon:AlertCircle, 
+        label:"Urgent", 
+        href: "/priority/urgent",
+    }, 
+   { 
+        icon:ShieldAlert, 
+        label:"Hight", 
+        href: "/priority/high",
+    }, 
+   { 
+        icon:AlertTriangle, 
+        label:"Medium", 
+        href: "/priority/medium",
+    }, 
+   { 
+        icon:AlertOctagon, 
+        label:"Low", 
+        href: "/priority/low",
+    }, 
+   { 
+        icon:Layers3, 
+        label:"Backlog", 
+        href: "/priority/backlog",
+    }, 
 ]
 
 const Sidebar = () => {
@@ -94,7 +122,7 @@ const Sidebar = () => {
                     
                 </nav>
 
-            {/* Project */}
+            {/* Project Links */}
                 <button onClick={() => setshowProjects((prev) => !prev)} className={`flex w-full items-center justify-between px-8 py-3 text-gray-500 `}>
                     <span className=''>Projects</span>
                     {showProjects ? (
@@ -104,6 +132,29 @@ const Sidebar = () => {
                         <ChevronDown className={`h-5 w-5 `}/>
                     )}
                 </button>
+
+            
+            {/* Projects list */}
+
+            {/* Priorities links */}
+                <button onClick={() => setShowPriority((prev) => !prev)} className={`flex w-full items-center justify-between px-8 py-3 text-gray-500 `}>
+                    <span className=''>Priority</span>
+                    {showPriority ? (
+                        <ChevronUp className={`h-5 w-5 `}/>
+                    ) : 
+                    (
+                        <ChevronDown className={`h-5 w-5 `}/>
+                    )}
+                </button>
+                {showPriority && (
+                    <> 
+                        {PriorityLinks.map((props) => (
+                            <li key={props.href} className='list-none'>
+                            <SidebarLink href={props.href} icon={props.icon} label={props.label}/>
+                        </li>
+                        ))}
+                    </>
+                )}
             </div>            
         </div>
     )
@@ -142,7 +193,7 @@ const SidebarLink = ({
 
                 <span className={`font-medium text-gray-800 dark:text-gray-100`}>{label}</span>
                 
-                {/* Projects list */}
+                
             
             </div>
         </Link>

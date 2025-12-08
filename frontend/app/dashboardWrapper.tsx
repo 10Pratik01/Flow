@@ -1,32 +1,32 @@
-
 "use client"; 
-
 
 import React, { useEffect } from 'react'; 
 import Navbar from './(components)/Navbar';
 import Sidebar from './(components)/Sidebar';
 import StoreProvider, { useAppSelector } from './redux';
 
-
-
-const DashboardLayout  = ({children} : {children: React.ReactNode} ) => {
-    const isSidebarCollapsed = useAppSelector((state)=> state.global.isSidebarCollapsed, ); 
+const DashboardLayout = ({children} : {children: React.ReactNode} ) => {
+    const isSidebarCollapsed = useAppSelector((state)=> state.global.isSidebarCollapsed); 
     const isDarkMode = useAppSelector((state) => state.global.isDarkMode); 
-
-    useEffect(()=>{
-        if(isDarkMode){
-            document.documentElement.classList.add("dark"); 
-        }else {
-             document.documentElement.classList.remove("dark"); 
+    
+    useEffect(() => {
+        const htmlElement = document.documentElement;
+        console.log('isDarkMode:', isDarkMode);
+        console.log('HTML classes before:', htmlElement.className);
+        
+        if (isDarkMode) {
+            htmlElement.classList.add("dark");
+        } else {
+            htmlElement.classList.remove("dark");
         }
-    })
+        
+        console.log('HTML classes after:', htmlElement.className);
+    }, [isDarkMode]);
 
     return(
-        <div className='flex min-h-screen w-full bg-gray-50 text-gray-900 '>
-            {/* sidebar  */}
+        <div className='flex min-h-screen w-full bg-gray-50 text-gray-900 dark:bg-dark-bg dark:text-white'>
             <Sidebar/>
             <main className={`flex w-full flex-col bg-gray-50 dark:bg-dark-bg ${isSidebarCollapsed ? "" : "md:pl-64"}`}>
-
                 <Navbar/>
                 {children}
             </main>
@@ -42,4 +42,4 @@ const DashboardWrapper = ({children}: {children: React.ReactNode}) => {
     )
 }
 
-export default DashboardWrapper; 
+export default DashboardWrapper;
