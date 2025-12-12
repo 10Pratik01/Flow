@@ -7,6 +7,7 @@ import {Task as TaskType} from "@/state/api"
 import { EllipsisVertical, MessageSquareMore, Plus } from 'lucide-react'
 import {format} from 'date-fns'
 import Image from 'next/image'
+import Loader from '@/app/(components)/Loader'
 
 
 type BoardProps = {
@@ -33,7 +34,7 @@ const BoardView = ({id, setIsModalNewTaskOpen}: BoardProps) => {
         updateTaskStatus({ taskId, status: toStatus });
     };
   
-    if(isLoading) return <div>Loading..</div>
+    if(isLoading) return <div><Loader/></div>
     if(error) return (<> {tasks} <div>Error</div></>)
 
     return (
@@ -93,7 +94,6 @@ const TaskColumn = ({
                     <div className='flex w-full items-center justify-between rounded-e-lg bg-white px-5 py-4 dark:bg-dark-secondary'>
                         <h3 className='flex items-center text-lg font-semibold dark:text-white'>
                              {status} {" "}
-                             
                         
                             <span className='ml-2 inline-block rounded-full bg-gray-200 p-1 text-center text-sm leading-none dark:bg-dark-tertiary ' style={{width: "1.5rem", height: "1.5rem"}}>
                                 {tasksCount}

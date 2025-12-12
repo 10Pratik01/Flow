@@ -4,6 +4,7 @@ import Header from "@/app/(components)/Header"
 import { type Task, useGetTasksQuery } from "@/state/api"
 import TaskCard from "@/app/(components)/TaskCard"
 import { Plus } from "lucide-react"
+import Loader from "@/app/(components)/Loader"
 
 type ListProps = {
   id: string
@@ -16,14 +17,15 @@ const ListView = ({ id, setIsModalNewTaskOpen }: ListProps) => {
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading tasks...</div>
+        <Loader/>
       </div>
     )
   if (error)
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-destructive">Error loading tasks</div>
-      </div>
+    </div>
+     
     )
 
   return (

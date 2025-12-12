@@ -50,7 +50,7 @@ export interface Task {
     tags? : string,
     startDate? : string,
     dueDate? : string,
-    points? : string,
+    points? : number,
     projectId? : string,
     authorUserId? : string, 
     assignedUserId? : string, 
