@@ -5,6 +5,8 @@ import ProjectHeader from "../ProjectHeader"
 import BoardView from "../BoardView"
 import ListView from "../ListView"
 import Timeline from "../TimeLineView"
+import Table from "../Table"
+
 const Project = () => {
     const params = useParams()
     const id = params?.id as string | undefined
@@ -18,7 +20,6 @@ const Project = () => {
 
     return (
         <div>
-            {id}
             {/* Modal new task  */}
             <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} id={id}/>
 
@@ -32,6 +33,10 @@ const Project = () => {
 
             {activeTab === "Timeline" && (
                 <Timeline id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+            )}
+
+            {activeTab === "Table" && (
+                <Table id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
             )}
 
 

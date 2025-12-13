@@ -40,6 +40,20 @@ body,
   --color-stroke-dark: #2d3135;
 }
 
+
+.gantt-dependency-line {
+  display: none !important;
+}
+
+.gantt-handle {
+  display: none !important;
+}
+
+.gantt-arrow {
+  display: none !important;
+}
+
+
 .timeline ._3_ygE {
   @apply rounded-tl-md border border-r-0 border-[#e6e4e4] dark:border-stroke-dark;
 }
