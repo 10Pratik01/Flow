@@ -16,6 +16,8 @@ const Modal = ({isOpen, onClose, children, name}: Props) => {
         return null
     }
 
+    
+
 
 
   return createPortal(
@@ -27,6 +29,7 @@ const Modal = ({isOpen, onClose, children, name}: Props) => {
             <button
               className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-primary text-white hover:bg-blue-600"
               onClick={onClose}
+
             >
               <X size={18} />
             </button>

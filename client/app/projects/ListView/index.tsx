@@ -35,7 +35,7 @@ const ListView = ({ id, setIsModalNewTaskOpen }: ListProps) => {
           name="List"
           buttonComponent={
             <button
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all duration-200 bg-blue-primary hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm"
               onClick={() => setIsModalNewTaskOpen(true)}
             >
               <Plus className="h-4 w-4" />

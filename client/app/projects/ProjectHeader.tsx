@@ -12,12 +12,13 @@ type Props = {
  
 const ProjectHeader = ({activeTab, setActiveTab, id}: Props) => {
   const [isModalNewProjectOpen, setIsModalNewProjectOpen] = useState(false)
+  
   const [searchInput, setSearchInput] = useState(""); 
 
   return (
     <div className='px-4 xl:px-6'>
       {/* Modal NEW project */}
-      <ModalNewProject isOpen={isModalNewProjectOpen} onClose={() => setIsModalNewProjectOpen(false)} /> 
+      <ModalNewProject isOpen={isModalNewProjectOpen} onClose={() => setIsModalNewProjectOpen(!isModalNewProjectOpen)} /> 
 
 
 

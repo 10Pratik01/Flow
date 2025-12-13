@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { formatISO } from "date-fns";
 import Modal from "@/app/(components)/Modal"
 import { useCreateProjectMutation } from '@/state/api'
-import Loader from "@/app/(components)/Loader";
 
 type Props = {
     isOpen: boolean
