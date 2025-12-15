@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Loader: React.FC = () => {
   return (
     <StyledWrapper>
-      <div className="loader-con ">
+      <div className="loader-con">
         {/* Cast the style object to React.CSSProperties */}
         <div style={{ '--i': 0 } as React.CSSProperties} className="pfile" />
         <div style={{ '--i': 1 } as React.CSSProperties} className="pfile" />
@@ -25,7 +25,6 @@ const StyledWrapper = styled.div`
     overflow: hidden;
     margin-left:auto;
     margin-right:auto;  
-    margin-top:auto; 
     margin-bottom:auto; 
   }
 
