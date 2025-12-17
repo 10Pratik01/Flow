@@ -40,14 +40,14 @@ const TaskCard = ({ task }: Props) => {
   return (
     <div className="group relative overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:bg-card dark:text-card-foreground">
       {task.attachments && task.attachments.length > 0 && (
-        <div className="relative h-40 w-full overflow-hidden bg-gradient-to-br from-muted to-muted/50">
+        <div className="relative h-40 w-full overflow-hidden from-muted to-muted/50">
           <Image
             src={`/${task.attachments[0].fileURL}`}
             alt={task.attachments[0].fileName}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <div className="absolute inset-0 from-black/20 to-transparent" />
         </div>
       )}
 
