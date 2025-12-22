@@ -69,3 +69,28 @@ export const updateTaskStatus = async (req:Request, res:Response): Promise<void>
         res.status(501).json({messge:`Server failed to update a task please try again later ${error.messgae}`})
     }
 } 
+
+
+
+export const getUserTask = async (req: Request, res:Response): Promise<void> => {
+    const {userId} = req.params; 
+    try {
+        const tasks = await prisma.task.findMany({
+            where: {
+               OR:[
+                {authorUserId: Number(userId)}, 
+                {assignedUserId: Number(userId)}, 
+               ]
+            }, 
+            include:{
+                author: true, 
+                assignee: true,  
+            }
+        }); 
+        res.status(201).json(tasks)
+    } catch (error:any) {
+            res.status(500).json({
+                message:`Error: ${error.message} , Please try again `
+            })
+    }
+}

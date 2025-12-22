@@ -1,8 +1,15 @@
 export const dataGridClassNames =
-  "border border-gray-200 bg-white dark:bg-black shadow ";
+  "border border-gray-200 bg-white dark:bg-black shadow  ";
 
+  
 export const dataGridSxStyles = (isDarkMode: boolean) => {
   return {
+      "&.MuiDataGrid-root": {
+      backgroundColor: isDarkMode ? "#1d1f21" : "#ffffff",
+      color: isDarkMode ? "#e5e7eb" : "#000000",
+      borderColor: isDarkMode ? "#2d3135" : "#e5e7eb",
+    },
+
     "& .MuiDataGrid-columnHeaders": {
       color: isDarkMode ? "#e5e7eb" : "",
       '& [role="row"] > *': {

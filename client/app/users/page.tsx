@@ -58,12 +58,13 @@ const columns: GridColDef[] = [
   return (
      <div className="flex w-screen p-10 flex-col">
       <Header name="Users" />
-      <div className='flex justify-center '>
-        <div  className='flex h-[650px] w-screen md:w-[450px] '>
+      <div className='flex justify-start '>
+        <div  className='flex h-[650px] w-screen md:w-[450px] overflow-auto no-scrollbar'>
           <DataGrid 
             rows={users || []}
             columns={columns}
             getRowId={(row) => row.userId}
+            pageSizeOptions={[5, 10, 25]}
             pagination
             className={dataGridClassNames}
             sx={dataGridSxStyles(isDarkMode)}

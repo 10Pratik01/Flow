@@ -107,3 +107,25 @@ body,
     background-image: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
   }
 }
+
+
+.gantt-container,
+.gantt-container svg {
+  background-color: #0f172a !important;
+}
+
+/* Task list panel */
+.gantt-task-list {
+  background-color: #020617 !important;
+  color: #e5e7eb !important;
+}
+
+/* Grid lines */
+.gantt-grid-line {
+  stroke: #334155 !important;
+}
+
+/* Text */
+.gantt-text {
+  fill: #e5e7eb !important;
+}

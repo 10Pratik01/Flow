@@ -86,11 +86,11 @@ const TimeLine = ({ setIsModalNewTaskOpen}: Props) => {
       <div className='overflow-hidden rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white'>
 
         
-        <div className='timeline'>
-         <Gantt
-            tasks={ganttTask}
-            {...displayOptions}      
-          />
+        <div className={`timeline ${isDarkMode ? "bg-[#0f172a]" : "bg-white"}`}>
+          <Gantt
+              tasks={ganttTask}
+              viewMode={ViewMode.Month}
+            />
         </div>
 
          <div className="px-4 pb-5 pt-1">

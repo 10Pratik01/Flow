@@ -41,7 +41,7 @@ const columns: GridColDef[] = [
   return (
      <div className="flex w-screen p-10 flex-col">
       <Header name="Teams" />
-      <div className='flex justify-center '>
+      <div className='flex justify-start '>
         <div  className='flex h-[650px] md:w-150 '>
           <DataGrid 
             rows={teams || []}
