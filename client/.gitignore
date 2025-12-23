@@ -5,6 +5,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+
+# root folder 
+../.vscode
+../.DS_Store
+
+
 # Environment
 .env
 .env.local
