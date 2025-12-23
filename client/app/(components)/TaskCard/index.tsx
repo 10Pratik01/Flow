@@ -1,7 +1,7 @@
 import type { Task } from "@/state/api"
 import { format } from "date-fns"
 import Image from "next/image"
-import { Calendar, User, Tag, Flag } from "lucide-react"
+import { Calendar, Tag, Flag } from "lucide-react"
 
 type Props = {
   task: Task
@@ -69,7 +69,7 @@ const TaskCard = ({ task }: Props) => {
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
         </div>
       )}
 
