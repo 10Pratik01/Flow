@@ -25,7 +25,7 @@ app.get('/', function (req, res) {
 });
 // Routes
 app.use("/", projectRoutes_js_1.default);
-var port = process.env.PORT || 3000;
-app.listen(port, function () {
+var port = Number(process.env.PORT) || 3000;
+app.listen(port,"0.0.0.0", function () {
     console.log("APP IS LISTNING AT ".concat(port));
 });
