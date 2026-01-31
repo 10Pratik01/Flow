@@ -85,7 +85,7 @@ const ModalNewProject = ({isOpen, onClose}: Props) => {
                 }`}
                 disabled={!isFormValid() || isLoading}
             >
-                {isLoading ? <div>Creating...</div>: "Create Projec"}
+                {isLoading ? <div>Creating...</div>: "Create Project"}
             </button>
         </form>
     </Modal>

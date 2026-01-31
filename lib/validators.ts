@@ -42,7 +42,7 @@ export type UpdateTaskStatusInput = z.infer<typeof updateTaskStatusSchema>;
 
 export const createProjectSchema = z.object({
   name: z.string().min(1, "Name is required").max(200, "Name too long"),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().optional(),
   startDate: z.string().datetime().optional(),
   endDate: z.string().datetime().optional(),
   status: z.enum(["active", "completed", "archived"]).optional().default("active"),
