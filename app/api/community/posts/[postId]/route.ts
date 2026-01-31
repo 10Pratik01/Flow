@@ -64,11 +64,11 @@ export async function GET(
     });
 
     const userVote = user 
-      ? post.votes.find(v => v.userId === user.userId)?.type || null 
+      ? post.votes.find((v: { userId: number; type: string }) => v.userId === user.userId)?.type || null 
       : null;
 
-    const upvotes = post.votes.filter(v => v.type === "UP").length;
-    const downvotes = post.votes.filter(v => v.type === "DOWN").length;
+    const upvotes = post.votes.filter((v: { type: string }) => v.type === "UP").length;
+    const downvotes = post.votes.filter((v: { type: string }) => v.type === "DOWN").length;
 
     const enhancedPost = {
       ...post,
