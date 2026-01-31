@@ -55,7 +55,11 @@ export async function POST(
         await prisma.vote.delete({
           where: { id: existingVote.id },
         });
-        await pusherServer.trigger(`post-${postId}`, "vote-update", { postId });
+        try {
+          await pusherServer.trigger(`post-${postId}`, "vote-update", { postId });
+        } catch (error) {
+          console.error("Failed to trigger Pusher event:", error);
+        }
         return successResponse({ message: "Vote removed", vote: null });
       } else {
         // Change vote type
@@ -63,7 +67,11 @@ export async function POST(
           where: { id: existingVote.id },
           data: { type },
         });
-        await pusherServer.trigger(`post-${postId}`, "vote-update", { postId });
+        try {
+          await pusherServer.trigger(`post-${postId}`, "vote-update", { postId });
+        } catch (error) {
+          console.error("Failed to trigger Pusher event:", error);
+        }
         return successResponse({ message: "Vote updated", vote });
       }
     } else {
@@ -75,7 +83,11 @@ export async function POST(
           type,
         },
       });
-      await pusherServer.trigger(`post-${postId}`, "vote-update", { postId });
+      try {
+        await pusherServer.trigger(`post-${postId}`, "vote-update", { postId });
+      } catch (error) {
+        console.error("Failed to trigger Pusher event:", error);
+      }
       return successResponse({ message: "Vote added", vote });
     }
   } catch (error) {

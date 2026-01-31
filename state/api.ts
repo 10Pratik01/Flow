@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Interfaces
+/* =========================
+   Interfaces
+========================= */
+
 export interface Project {
   id: number;
   name: string;
@@ -55,11 +58,6 @@ export interface Task {
   projectId: number;
   authorUserId: number;
   assignedUserId?: number;
-
-  author?: User;
-  assignee?: User;
-  comments?: Comment[];
-  attachments?: Attachment[];
 }
 
 export interface Comment {
@@ -69,7 +67,6 @@ export interface Comment {
   postId?: number;
   userId: number;
   createdAt: string;
-  user?: User;
 }
 
 export interface SearchResult {
@@ -85,7 +82,6 @@ export interface Team {
   projectManagerUserId?: number;
 }
 
-// Community Interfaces
 export interface Post {
   id: number;
   title: string;
@@ -93,63 +89,76 @@ export interface Post {
   authorId: number;
   tags?: string;
   createdAt: string;
-  author: User;
-  _count: {
-    comments: number;
-    votes: number;
-  };
-  userVote?: "UP" | "DOWN" | null;
-  voteCount?: number;
 }
 
+/* =========================
+   Tag constants (IMPORTANT)
+========================= */
+
+const PROJECTS = "Projects" as const;
+const TASKS = "Tasks" as const;
+const USERS = "Users" as const;
+const TEAMS = "Teams" as const;
+const POSTS = "CommunityPosts" as const;
+
+/* =========================
+   API
+========================= */
+
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: "/api",
-    prepareHeaders: async (headers) => {
-      // Clerk middleware handles auth via cookies automatically for same-domain requests
-      // But if we need tokens explicitly:
-      // const token = await window.Clerk?.session?.getToken();
-      // if (token) headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
-  }),
   reducerPath: "api",
-  tagTypes: ["Projects", "Tasks", "Users", "Teams", "CommunityPosts"],
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  tagTypes: [PROJECTS, TASKS, USERS, TEAMS, POSTS],
+
   endpoints: (build) => ({
+
+    /* ---------- Projects ---------- */
+
     getProjects: build.query<Project[], void>({
       query: () => "projects",
-      providesTags: ["Projects"],
-      transformResponse: (response: { success: boolean; data: Project[] }) => response.data,
+      transformResponse: (res: { success: boolean; data: Project[] }) => res.data,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: PROJECTS, id })),
+              { type: PROJECTS, id: "LIST" },
+            ]
+          : [{ type: PROJECTS, id: "LIST" }],
     }),
+
     createProject: build.mutation<Project, Partial<Project>>({
       query: (project) => ({
         url: "projects",
         method: "POST",
         body: project,
       }),
-      invalidatesTags: ["Projects"],
+      invalidatesTags: [{ type: PROJECTS, id: "LIST" }],
     }),
-    
+
+    /* ---------- Tasks ---------- */
+
     getTasks: build.query<Task[], { projectId: number }>({
       query: ({ projectId }) => `tasks?projectId=${projectId}`,
+      transformResponse: (res: { success: boolean; data: Task[] }) => res.data,
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "Tasks" as const, id })),
-              { type: "Tasks" as const, id: "LIST" },
+              ...result.map(({ id }) => ({ type: TASKS, id })),
+              { type: TASKS, id: "LIST" },
             ]
-          : [{ type: "Tasks" as const, id: "LIST" }],
+          : [{ type: TASKS, id: "LIST" }],
     }),
 
     getTasksByUser: build.query<Task[], number>({
       query: (userId) => `tasks/user/${userId}`,
-      providesTags: (result, error, userId) =>
+      transformResponse: (res: { success: boolean; data: Task[] }) => res.data,
+      providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "Tasks" as const, id })),
-              { type: "Tasks" as const, id: "USER_LIST" },
+              ...result.map(({ id }) => ({ type: TASKS, id })),
+              { type: TASKS, id: "USER_LIST" },
             ]
-          : [{ type: "Tasks" as const, id: "USER_LIST" }],
+          : [{ type: TASKS, id: "USER_LIST" }],
     }),
 
     createTask: build.mutation<Task, Partial<Task>>({
@@ -158,7 +167,7 @@ export const api = createApi({
         method: "POST",
         body: task,
       }),
-      invalidatesTags: ["Tasks"],
+      invalidatesTags: [{ type: TASKS, id: "LIST" }],
     }),
 
     updateTaskStatus: build.mutation<Task, { taskId: number; status: string }>({
@@ -167,59 +176,84 @@ export const api = createApi({
         method: "PATCH",
         body: { status },
       }),
-      invalidatesTags: (result, error, { taskId }) => [
-        { type: "Tasks", id: taskId },
+      invalidatesTags: (_r, _e, { taskId }) => [
+        { type: TASKS, id: taskId },
       ],
     }),
 
-    searchQuery: build.query<SearchResult, string>({
-      query: (search) => `search?query=${search}`,
-    }),
+    /* ---------- Users ---------- */
 
     getUsers: build.query<User[], void>({
       query: () => "users",
-      providesTags: ["Users"],
+      transformResponse: (res: { success: boolean; data: User[] }) => res.data,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ userId }) => ({ type: USERS, id: userId })),
+              { type: USERS, id: "LIST" },
+            ]
+          : [{ type: USERS, id: "LIST" }],
     }),
+
+    /* ---------- Teams ---------- */
 
     getTeams: build.query<Team[], void>({
       query: () => "teams",
-      providesTags: ["Teams"],
+      transformResponse: (res: { success: boolean; data: Team[] }) => res.data,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: TEAMS, id })),
+              { type: TEAMS, id: "LIST" },
+            ]
+          : [{ type: TEAMS, id: "LIST" }],
     }),
 
-    // Community Endpoints
-    getPosts: build.query<Post[], { userId?: number; tag?: string } | void>({
-      query: (params) => {
-        if (!params) return "community/posts";
-        const { userId, tag } = params;
-        let queryString = "";
-        if (userId) queryString += `userId=${userId}&`;
-        if (tag) queryString += `tag=${tag}&`;
-        return `community/posts?${queryString}`;
-      },
-      providesTags: ["CommunityPosts"],
+    /* ---------- Search ---------- */
+
+    searchQuery: build.query<SearchResult, string>({
+      query: (q) => `search?query=${q}`,
     }),
-    
+
+    /* ---------- Community ---------- */
+
+    getPosts: build.query<Post[], void>({
+      query: () => "community/posts",
+      transformResponse: (res: { success: boolean; data: Post[] }) => res.data,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: POSTS, id })),
+              { type: POSTS, id: "LIST" },
+            ]
+          : [{ type: POSTS, id: "LIST" }],
+    }),
+
     createPost: build.mutation<Post, Partial<Post>>({
       query: (post) => ({
         url: "community/posts",
         method: "POST",
         body: post,
       }),
-      invalidatesTags: ["CommunityPosts"],
+      invalidatesTags: [{ type: POSTS, id: "LIST" }],
     }),
   }),
 });
+
+/* =========================
+   Hooks
+========================= */
 
 export const {
   useGetProjectsQuery,
   useCreateProjectMutation,
   useGetTasksQuery,
+  useGetTasksByUserQuery,
   useCreateTaskMutation,
   useUpdateTaskStatusMutation,
-  useSearchQueryQuery,
   useGetUsersQuery,
   useGetTeamsQuery,
-  useGetTasksByUserQuery,
+  useSearchQueryQuery,
   useGetPostsQuery,
   useCreatePostMutation,
 } = api;

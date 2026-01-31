@@ -16,8 +16,8 @@ export const createTaskSchema = z.object({
     .optional()
     .default("Medium"),
   tags: z.string().optional(),
-  startDate: z.string().datetime().optional(),
-  dueDate: z.string().datetime().optional(),
+  startDate: z.string().datetime({ offset: true }).optional(),
+  dueDate: z.string().datetime({ offset: true }).optional(),
   points: z.number().int().min(0).max(100).optional(),
   estimatedHours: z.number().min(0).max(1000).optional(),
   projectId: z.number().int().positive("Project ID is required"),
@@ -43,8 +43,8 @@ export type UpdateTaskStatusInput = z.infer<typeof updateTaskStatusSchema>;
 export const createProjectSchema = z.object({
   name: z.string().min(1, "Name is required").max(200, "Name too long"),
   description: z.string().optional(),
-  startDate: z.string().datetime().optional(),
-  endDate: z.string().datetime().optional(),
+startDate: z.string().datetime({ offset: true }).optional(),
+endDate: z.string().datetime({ offset: true }).optional(),
   status: z.enum(["active", "completed", "archived"]).optional().default("active"),
 });
 
@@ -85,7 +85,7 @@ export const createTimeEntrySchema = z.object({
   taskId: z.number().int().positive("Task ID is required"),
   hours: z.number().min(0.1, "Hours must be at least 0.1").max(24, "Hours cannot exceed 24"),
   description: z.string().max(500, "Description too long").optional(),
-  date: z.string().datetime().optional(),
+  date: z.string().datetime({ offset: true }).optional(),
 });
 
 export const updateTimeEntrySchema = createTimeEntrySchema.partial().extend({

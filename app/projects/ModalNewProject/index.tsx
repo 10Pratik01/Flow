@@ -25,12 +25,21 @@ const ModalNewProject = ({isOpen, onClose}: Props) => {
       representation: "complete",
     });
 
-    await createProject({
+    console.log("formattedStartDate", formattedStartDate);
+    console.log("formattedEndDate", formattedEndDate);
+    console.log("projectName", projectName);
+    console.log("description", description);
+
+    const res = await createProject({
       name: projectName,
       description,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
     });
+
+    console.log("result", res); 
+
+
   };
 
   const isFormValid = () => {
