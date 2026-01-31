@@ -159,7 +159,7 @@ const Task = ({task} : TasksProps) => {
             drag(instance);
         }} className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary ${ isDragging ? "opacity-50" : "opacity-100"}`}>
             {task.attachments && task.attachments.length > 0 && (
-                <Image src={`/${task.attachments[0].fileURL}`} alt={task.attachments[0].fileName} width={500} height={200} className='h-auto w-full rounded-t-md' /> 
+                <Image src={`/${task.attachments[0].fileURL}`} alt={task.attachments[0].fileName || "Task Attachment"} width={500} height={200} className='h-auto w-full rounded-t-md' /> 
             )}
             <div className='p-4 md:p-6'>
                 <div className='flex items-start justify-between'>
