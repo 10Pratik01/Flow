@@ -65,7 +65,7 @@ const TaskCard = ({ task }: Props) => {
         <div className="relative h-36 w-full overflow-hidden">
           <Image
             src={`/${task.attachments[0]?.fileURL}`}
-            alt={task.attachments[0].fileName}
+            alt={task.attachments[0].fileName || "Task Attachment"}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />

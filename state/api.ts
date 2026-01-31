@@ -40,7 +40,9 @@ export interface User {
 export interface Attachment {
   id: number;
   fileURL: string;
-  fileName: string;
+  fileName?: string;
+  fileSize?: number;
+  fileType?: string;
   taskId: number;
   uploadedById: number;
 }
@@ -55,18 +57,30 @@ export interface Task {
   startDate?: string;
   dueDate?: string;
   points?: number;
+  estimatedHours?: number;
   projectId: number;
   authorUserId: number;
   assignedUserId?: number;
+
+  author?: User;
+  assignee?: User;
+
+  // Relations
+  attachments?: Attachment[];
+  comments?: Comment[];
+  activities?: Activity[];
+  timeEntries?: TimeEntry[];
+  dependencies?: TaskDependency[];
+  dependents?: TaskDependency[];
 }
 
 export interface Comment {
   id: number;
   text: string;
+  mentions?: string;
   taskId?: number;
   postId?: number;
   userId: number;
-  createdAt: string;
 }
 
 export interface SearchResult {
@@ -88,7 +102,78 @@ export interface Post {
   content: string;
   authorId: number;
   tags?: string;
-  createdAt: string;
+  
+  // Relations
+  votes?: Vote[];
+  comments?: Comment[];
+  author?: User;
+}
+
+export interface ProjectTeam {
+  id: number;
+  teamId: number;
+  projectId: number;
+}
+
+export interface TaskAssignment {
+  id: number;
+  userId: number;
+  taskId: number;
+}
+
+export interface TaskDependency {
+  id: number;
+  taskId: number;
+  dependsOnId: number;
+  dependencyType: string;
+}
+
+export interface Activity {
+  id: number;
+  userId: number;
+  action: string;
+  entityType: string;
+  entityId: number;
+  projectId?: number;
+  metadata?: any;
+}
+
+export interface TimeEntry {
+  id: number;
+  taskId: number;
+  userId: number;
+  hours: number;
+  description?: string;
+  date: string;
+}
+
+export interface ProjectTemplate {
+  id: number;
+  name: string;
+  description: string;
+  category?: string;
+  isPublic: boolean;
+  createdById?: number;
+  templateData: any;
+}
+
+export interface AIInsight {
+  id: number;
+  projectId?: number;
+  taskId?: number;
+  insightType: string;
+  title: string;
+  description: string;
+  confidence: number;
+  metadata?: any;
+  isRead: boolean;
+}
+
+export interface Vote {
+  id: number;
+  postId: number;
+  userId: number;
+  type: "UP" | "DOWN";
 }
 
 /* =========================
