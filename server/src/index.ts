@@ -30,7 +30,7 @@ app.use(cors());
 
 // Home route 
 app.get('/', (req, res) => {
-    res.send("SERVER IS RUNNING "); 
+    res.send("Fl SERVER IS RUNNING "); 
 })
 
 // Routes
