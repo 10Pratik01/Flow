@@ -1,4 +1,4 @@
-# Flow
+# Milestone
 
 A modern, full-stack project management application built with Next.js and Express, designed to streamline team collaboration and task management.
 
@@ -49,7 +49,7 @@ A modern, full-stack project management application built with Next.js and Expre
 ## 📁 Project Structure
 
 ```
-Flow/
+Milestone/
 ├── client/                 # Next.js frontend application
 │   ├── app/               # Next.js app directory
 │   │   ├── (components)/  # Shared components
@@ -108,7 +108,7 @@ The application uses Prisma ORM with PostgreSQL and includes the following model
 
    ```bash
    git clone <repository-url>
-   cd Flow
+   cd Milestone
    ```
 
 2. **Install dependencies**
@@ -132,7 +132,7 @@ The application uses Prisma ORM with PostgreSQL and includes the following model
    Create a `.env` file in the `server` directory:
 
    ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/Flow"
+   DATABASE_URL="postgresql://user:password@localhost:5432/Milestone"
    PORT=8000
    ```
 

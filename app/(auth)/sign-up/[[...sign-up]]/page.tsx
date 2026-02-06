@@ -9,7 +9,7 @@ export default function SignUpPage() {
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 dark:bg-zinc-900">
           <div className="mb-6 text-center">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Account</h1>
-            <p className="text-gray-500 mt-2 dark:text-gray-300">Join Flow to manage your projects</p>
+            <p className="text-gray-500 mt-2 dark:text-gray-300">Join Milestone to manage your projects</p>
           </div>
           <SignUp 
             appearance={{

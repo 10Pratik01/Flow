@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata: Metadata = {
-  title: "Flow",
+  title: "Milestone",
   description: "Project management website created in next app",
 };
 

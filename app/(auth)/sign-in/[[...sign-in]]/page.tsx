@@ -9,7 +9,7 @@ export default function SignInPage() {
         <div className="bg-white dark:bg-zinc-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
           <div className="mb-6 text-center">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome Back</h1>
-            <p className="text-gray-500 mt-2 dark:text-gray-300">Sign in to continue to Flow</p>
+            <p className="text-gray-500 mt-2 dark:text-gray-300">Sign in to continue to Milestone</p>
           </div>
           <SignIn 
             appearance={{

@@ -56,7 +56,10 @@ export default function Footer() {
               Have questions? Reach out to us.
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-              support@taskorium.com
+              pratik.patil5@somaiya.edu
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+              pratikpatil.xyz
             </p>
           </div>
         </div>

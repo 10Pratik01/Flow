@@ -108,7 +108,7 @@ export const Header = () => {
         The Ultimate <br /> Project Management studio
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-       Flow is built to simplify how projects and tasks are managed. With a focus on clarity, performance, and usability, we combine modern technology with thoughtful design to help teams stay organized and productive.
+       Milestone is built to simplify how projects and tasks are managed. With a focus on clarity, performance, and usability, we combine modern technology with thoughtful design to help teams stay organized and productive.
       </p>
     </div>
   );

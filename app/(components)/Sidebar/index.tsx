@@ -108,7 +108,7 @@ const Sidebar = () => {
             {/* TOP logo */}
                 <div className='z-50 flex min-h-14 w-64 items-center justify-between bg-white px-6 pt-3 dark:bg-black'>
                     <div className='text-xl font-bold text-gray-800 dark:text-white'>
-                        Flow
+                        Milestone
                     </div>
 
                     {isSidebarCollapsed ? null : (
@@ -123,7 +123,7 @@ const Sidebar = () => {
                 
                         <Image src="/logo.png" alt="This" width={40} height={40} /> 
                         <div>
-                            <h3 className='text-md font-bold tracking-wide dark:text-gray-200'>Flow</h3>
+                            <h3 className='text-md font-bold tracking-wide dark:text-gray-200'>Milestone</h3>
                             <div className='mt-1 flex items-start gap-2'>
                             <LockIcon className='mt-[0.1rem] h-3 w-3 text-gray-500 dark:text-gray-400'/>
                             <p className='text-xs text-gray-500'>Private</p>
