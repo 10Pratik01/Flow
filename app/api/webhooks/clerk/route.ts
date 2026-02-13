@@ -56,19 +56,30 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    const { id, email_addresses, username, image_url, first_name, last_name } =
+    const { id, email_addresses, username: clerkUsername, image_url, first_name, last_name } =
       evt.data;
 
     try {
+      // Generate base username
+      let username = clerkUsername ||
+        `${first_name || ""}${last_name || ""}`.toLowerCase() ||
+        email_addresses[0].email_address.split("@")[0];
+
+      // Check if username exists and append suffix if needed
+      const existingUser = await prisma.user.findUnique({
+        where: { username },
+      });
+
+      if (existingUser) {
+        username = `${username}${Math.floor(1000 + Math.random() * 9000)}`;
+      }
+
       // Create user in database
       await prisma.user.create({
         data: {
           clerkId: id,
           email: email_addresses[0].email_address,
-          username:
-            username ||
-            `${first_name || ""}${last_name || ""}`.toLowerCase() ||
-            email_addresses[0].email_address.split("@")[0],
+          username,
           profilePictureUrl: image_url || null,
         },
       });

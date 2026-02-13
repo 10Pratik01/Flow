@@ -3,31 +3,14 @@
 import { auth } from "@clerk/nextjs/server";
 import { db as prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { syncUser } from "./users";
 
 /**
  * Get all projects for the current user
  * Users can only see projects they created or are part of via team
  */
 export async function getProjects() {
-  const authObject = await auth();
-  const { userId: clerkId } = authObject;
-  
-  console.log("getProjects Debug:", { 
-      clerkId, 
-      sessionId: authObject.sessionId, 
-      userId: authObject.userId,
-      path: "actions/projects.ts"
-  });
-  
-  if (!clerkId) {
-    throw new Error("Unauthorized");
-  }
-
-  // Get user from database
-  const user = await prisma.user.findUnique({
-    where: { clerkId },
-    select: { userId: true, teamId: true },
-  });
+  const user = await getAuthenticatedUser();
 
   if (!user) {
     throw new Error("User not found");
@@ -94,16 +77,7 @@ export async function createProject(data: {
   startDate?: string;
   endDate?: string;
 }) {
-  const { userId: clerkId } = await auth();
-  
-  if (!clerkId) {
-    throw new Error("Unauthorized");
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { clerkId },
-    select: { userId: true, teamId: true },
-  });
+  const user = await getAuthenticatedUser();
 
   if (!user) {
     throw new Error("User not found");
@@ -148,16 +122,7 @@ export async function createProject(data: {
  * Get a single project by ID (with access check)
  */
 export async function getProject(projectId: number) {
-  const { userId: clerkId } = await auth();
-  
-  if (!clerkId) {
-    throw new Error("Unauthorized");
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { clerkId },
-    select: { userId: true, teamId: true },
-  });
+  const user = await getAuthenticatedUser();
 
   if (!user) {
     throw new Error("User not found");
@@ -278,4 +243,31 @@ export async function getProjectUsers(projectId: number) {
   });
 
   return Array.from(users.values());
+}
+
+async function getAuthenticatedUser() {
+  const { userId: clerkId } = await auth();
+  
+  if (!clerkId) {
+    throw new Error("Unauthorized");
+  }
+
+  let user = await prisma.user.findUnique({
+    where: { clerkId },
+    select: { userId: true, teamId: true },
+  });
+
+  if (!user) {
+    await syncUser();
+    user = await prisma.user.findUnique({
+      where: { clerkId },
+      select: { userId: true, teamId: true },
+    });
+  }
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
 }

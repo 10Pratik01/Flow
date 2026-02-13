@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Loader from "../Loader";
+import Loader from "../homeScreenLoader";
 
 export default function GlobalLoader() {
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,12 @@ export default function GlobalLoader() {
 
   return (
         <div className="h-screen w-screen -translate-y-20">
-            <Loader />
+            {/* <Loader /> */}
+            <div className="flex items-center justify-center h-screen">
+      <Loader />
+      {/* Custom version */}
+      {/* <Loader size={80} color="tomato" borderWidth={10} /> */}
+    </div>
         </div>
     );
 }
